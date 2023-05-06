@@ -1,16 +1,17 @@
-# Gitlab does not support Windows runners out of the box. Self hosted runners can be configured
-# by following https://docs.gitlab.com/runner/install/windows.html
-# Once this has been setup add the below step to your pipeline file to run automated tests using Postman CLI.
+name: Automated API tests using Postman CLI
 
-stages:
-  - automated-api-tests
+on: push
 
-automated-api-tests:
-  stage: automated-api-tests
-  before_script:
-    # Installing Postman CLI
-    - powershell.exe -NoProfile -InputFormat None -ExecutionPolicy AllSigned -Command "[System.Net.ServicePointManager]::SecurityProtocol = 3072; iex ((New-Object System.Net.WebClient).DownloadString('https://dl-cli.pstmn.io/install/win64.ps1'))"
-  script:
-    # Login using your Postman API keys
-    - postman login --with-api-key $POSTMAN_API_KEY
-    - postman collection run "14374889-f9b0d308-591d-4dcf-8d76-8b05d8a90f86" -e "14374889-a79a801d-8a33-470b-bbcb-4b0858912fee"
+jobs:
+  automated-api-tests:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Install Postman CLI
+        run: |
+          curl -o- "https://dl-cli.pstmn.io/install/linux64.sh" | sh
+      - name: Login to Postman CLI
+        run: postman login --with-api-key ${{ secrets.POSTMAN_API_KEY }}
+      - name: Run API tests
+        run: |
+          postman collection run "14374889-f9b0d308-591d-4dcf-8d76-8b05d8a90f86" -e "14374889-a79a801d-8a33-470b-bbcb-4b0858912fee"
