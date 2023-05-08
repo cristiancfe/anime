@@ -16,7 +16,7 @@ jobs:
           -e "14374889-a79a801d-8a33-470b-bbcb-4b0858912fee"
       - uses: actions/upload-artifact@v2
       - run: run-tests --coverage-report=coverage/index.html
-      - uses: actions/upload-artifact@v2
+      - uses: actions/download-artifact@v2
         with: 
            name: coverage-report
            path: coverage/index.html
