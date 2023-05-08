@@ -14,9 +14,8 @@ jobs:
         run: >-
           postman collection run "14374889-f9b0d308-591d-4dcf-8d76-8b05d8a90f86"
           -e "14374889-a79a801d-8a33-470b-bbcb-4b0858912fee"
-        test_with_coverage: null
-        runs-on: ubuntu-latest
-        uses:
-          - run: run-tests --coverage-report=coverage/index.html
+          runs-on: ubuntu-latest
           - uses: actions/upload-artifact@v2
-            with: null
+           - run: run-tests --coverage-report=coverage/index.html
+           - uses: actions/upload-artifact@v2
+             with: null
