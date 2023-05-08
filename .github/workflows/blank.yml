@@ -1,7 +1,5 @@
 name: Automated API tests using Postman CLI
-
-on: push
-
+'on': push
 jobs:
   automated-api-tests:
     runs-on: ubuntu-latest
@@ -11,9 +9,14 @@ jobs:
         run: |
           curl -o- "https://dl-cli.pstmn.io/install/linux64.sh" | sh
       - name: Login to Postman CLI
-        run: postman login --with-api-key ${{ secrets.POSTMAN_API_KEY }}
+        run: 'postman login --with-api-key ${{ secrets.POSTMAN_API_KEY }}'
       - name: Run API tests
-        run: 
-          postman collection run "14374889-f9b0d308-591d-4dcf-8d76-8b05d8a90f86" -e "14374889-a79a801d-8a33-470b-bbcb-4b0858912fee" 
-      
-      
+        run: >-
+          postman collection run "14374889-f9b0d308-591d-4dcf-8d76-8b05d8a90f86"
+          -e "14374889-a79a801d-8a33-470b-bbcb-4b0858912fee"
+        test_with_coverage: null
+        runs-on: ubuntu-latest
+        uses:
+          - run: run-tests --coverage-report=coverage/index.html
+          - uses: actions/upload-artifact@v2
+            with: null
