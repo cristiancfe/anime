@@ -29,6 +29,6 @@ jobs:
       uses: actions/download-artifact@v3
       with:
         name: index.html
-        run: ls-la
+        path: public
     
     
