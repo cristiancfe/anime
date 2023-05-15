@@ -28,7 +28,9 @@ jobs:
     - name: Download artifact
       uses: actions/download-artifact@v3
       with:
-        name: index.html
-        path: public
-    
+        name: index.html.zip
+    - name: Arquivo
+      uses: thedoctor0/zip-release@master
+      with:
+        arquivo: index.zip
     
