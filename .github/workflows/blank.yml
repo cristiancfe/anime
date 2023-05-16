@@ -17,8 +17,12 @@ jobs:
         run: >-
           postman collection run "14374889-f9b0d308-591d-4dcf-8d76-8b05d8a90f86"
           -e "14374889-a79a801d-8a33-470b-bbcb-4b0858912fee" 
-      - name: production artifacts
+      - name: collection
+        run: newman run ./collection.json -e ./env.json --reporters cli, -r htmlextra --reporter-htmlextra-export ./results/Report.html
+   
+      # Runs a set of commands using the runners shell
+      - name: Step 4 Archive production artifacts
         uses: actions/upload-artifact@v2
         with:
             name: report
-            path: index.html
+            path: ./results/Report.html
